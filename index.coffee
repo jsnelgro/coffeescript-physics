@@ -1,4 +1,11 @@
-hello = require './hello'
+App = require('./App')
+app = new App()
 
-console.log hello.hello
+window.setup = ->
+  app.setup()
 
+window.draw = ->
+  app.draw()
+
+window.mousePressed = ->
+  app.mousePressed()
