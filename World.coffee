@@ -1,5 +1,6 @@
 Vector = require './Vector'
 Actor = require './Actor'
+Liquid = require './Liquid'
 
 class World
 
@@ -8,6 +9,10 @@ class World
   borders: true
 
   constructor: ->
+    @actors.push new Liquid
+      position: new Vector(x:0, y:height-height/3)
+      width: width
+      height: height/3
     for i in [0..5]
       @actors.push new Actor
         mass: floor(random(10))
@@ -17,6 +22,8 @@ class World
 
   update: ->
     for actor in @actors
+      if @actors[0].contains(actor)
+        actor.applyForce(@drag(actor, @actors[0]))
       actor.applyForce(@applyGravity(actor))
       actor.applyForce(@friction(actor))
       actor.update()
@@ -39,9 +46,8 @@ class World
     friction.multiply(fricMag)
     return friction
 
-  drag: (actor)->
-    coefficent_of_drag = 0.01
-    mag = actor.velocity.magnitude()**2 * coefficent_of_drag
+  drag: (actor, substance)->
+    mag = actor.velocity.magnitude()**2 * substance.coefficent
     dir = Vector.multiply(Vector.normalize(actor.velocity), -1)
     return dir.multiply(mag)
 

@@ -15,11 +15,12 @@ class Vector
     new Vector(x:v1.x/mag, y:v1.y/mag)
 
   @magnitude: (v1)->
-    Math.sqrt(v1.x**2 + v1.y**2)
+    return Math.sqrt(v1.x**2 + v1.y**2)
 
   @normalize: (v1)->
     if Vector.magnitude(v1) > 0
       return Vector.divide(v1, Vector.magnitude(v1))
+    return v1
 
   @limit: (v1, max)->
     if Vector.magnitude(v1) > max
@@ -28,6 +29,11 @@ class Vector
 
   @copy: (v1)->
     return new Vector(x:v1.x, y:v1.y)
+
+  @random: (x=100,y=100)->
+    _x = Math.floor(Math.random()*x)
+    _y = Math.floor(Math.random()*y)
+    return new Vector(x:_x, y:_y)
 
   constructor: ({x, y}) ->
     @x = x || 0
@@ -55,8 +61,7 @@ class Vector
     @
 
   magnitude: ->
-    Math.sqrt(@x**2 + @y**2)
-    @
+    return Math.sqrt(@x**2 + @y**2)
 
   normalize: ->
     if @magnitude() > 0 then @divide(@magnitude()); @

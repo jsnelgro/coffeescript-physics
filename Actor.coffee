@@ -3,12 +3,16 @@ Vector = require './Vector'
 class Actor
 
   physics: true
+  solid: true # TODO
+  tags: {} # TODO
 
-  constructor: ({position, velocity, acceleration, mass}) ->
+  constructor: ({position, velocity, acceleration, mass, width, height}) ->
     @position = position || new Vector(x:0,y:0)
     @velocity = velocity || new Vector(x:0,y:0)
     @acceleration = acceleration || new Vector(x:0,y:0)
     @mass = mass || 1
+    @width = width || 50
+    @height = height || 50
     @display()
     @accelerate(@acceleration)
 
@@ -16,7 +20,8 @@ class Actor
     if @physics then @accelerate(@acceleration)
 
   display: ->
-    ellipse(@position.x, @position.y, 50, 50)
+    fill(0,0,0)
+    ellipse(@position.x, @position.y, @width, @height)
 
   applyForce: (force)->
     f = force.copy()
@@ -30,5 +35,13 @@ class Actor
     @velocity.add(accel_vector)
     @position.add(@velocity)
     @clearForces()
+
+  contains: (actor)->
+    actpos = actor.position
+    return actpos.x > @position.x &&
+           actpos.x < @position.x + @width &&
+           actpos.y > @position.y &&
+           actpos.y < @position.y + @height
+
 
 module.exports = Actor
