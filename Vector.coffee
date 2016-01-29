@@ -27,6 +27,9 @@ class Vector
       return Vector.multiply(Vector.normalize(v1), max)
     return v1
 
+  @heading: (v1)->
+    return Math.atan2(v1.y, v1.x)
+
   @copy: (v1)->
     return new Vector(x:v1.x, y:v1.y)
 
@@ -68,6 +71,9 @@ class Vector
 
   limit: (max)->
     if @magnitude() > max then @normalize(); @multiply(max); @
+
+  heading: ->
+    return Math.atan2(@y, @x)
 
   copy: ->
     return new Vector(x:@x, y:@y)

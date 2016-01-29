@@ -1,15 +1,19 @@
 World = require './World'
-window.p5 = require 'p5'
 
 class App
 
+  constructor: (P)->
+    window.P = P
+
   setup: ->
-    createCanvas(640, 480)
+    P.size(window.innerWidth, window.innerHeight)
+    P.angleMode = 'radians'
     @world = new World()
 
   draw: ->
-    background(255,255,255)
+    P.background(255,255,255)
     @world.update()
+    @world.display()
 
   mousePressed: ->
     return

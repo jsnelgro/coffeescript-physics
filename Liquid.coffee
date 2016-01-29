@@ -4,16 +4,17 @@ class Liquid extends Actor
 
   tags: { liquid: true }
 
-  constructor: (params={position, velocity, acceleration, mass, width, height})->
+  constructor: (params)->
+    super params
     @physics = false
-    @width = 200
-    @height = 200
+    @width = params.width || 200
+    @height = params.height || 200
     @coefficent = 0.1
-    super(params)
 
   display: ->
-    noStroke()
-    fill(175, 25, 140)
-    rect(@position.x, @position.y, @width, @height)
+    P.rectMode(P.CORNER)
+    P.noStroke()
+    P.fill(175, 25, 140)
+    P.rect(@position.x, @position.y, @width, @height)
 
 module.exports = Liquid
